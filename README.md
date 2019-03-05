@@ -93,3 +93,12 @@ The `startUrls` attribute should cotain an array of URLs as follows:
     ...
 }
 ```
+
+## Notes
+
+* Booking.com will only display maximum of 1000 results, if you need to circumvent this limitation,  
+  you can utilize the `useFilters` INPUT attribute. However, in such case it will not be possible  
+  to use any limiting filters in start URLs, because the scraper will override those.
+  
+* If you need to get data about specific rooms, the crawler needs to be started with `checkIn` and  
+  `checkOut` INPUT attributes (Booking.com only shows room info for specific dates).

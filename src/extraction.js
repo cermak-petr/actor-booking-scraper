@@ -172,8 +172,8 @@ module.exports.extractDetail = async (page, ld, input) => {
         region: addr.addressRegion,
     };
     const html = await page.content();
-    const nameElem = await page.$('#hp_hotel_name');
-    const name = await getAttribute(name, 'textContent').split('\n');
+    const name = await page.$('#hp_hotel_name');
+    const nameText = await getAttribute(name, 'textContent').split('\n');
     const hType = await page.$('.hp__hotel-type-badge');
     const bFast = await page.$('.ph-item-copy-breakfast-option');
     const starIcon = await page.$('i.bk-icon-stars');
@@ -189,7 +189,7 @@ module.exports.extractDetail = async (page, ld, input) => {
     const rooms = await page.evaluate(extractRoomsJQuery);
     return {
         url: addUrlParameters((await page.url()).split('?')[0], input),
-        name: name[name.length - 1].trim(),
+        name: nameText[nameText.length - 1].trim(),
         type: await getAttribute(hType, 'textContent'),
         description: ld.description || null,
         stars: stars ? stars[0] : null,

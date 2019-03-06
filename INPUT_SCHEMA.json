@@ -1,0 +1,120 @@
+{
+    "title": "Booking Crawler input",
+    "type": "object",
+    "schemaVersion": 1,
+    "properties": {
+        "simple": {
+            "title": "Extract hotel list pages only (no detail)",
+            "type": "boolean",
+            "description": "The crawler will get only the data available on the list page and not go to the hotel detail page.",
+            "default": true
+        },
+        "useFilters": {
+            "title": "Use criteria filters (necessary for more than 1000 results)",
+            "type": "boolean",
+            "description": "The crawler will enqueue all the different criteria filtered pages, this will overcome the 1000 results limit, but the scrape will take significantly longer.",
+            "default": false
+        },
+        "search": {
+            "title": "Booking search query",
+            "type": "string",
+            "description": "Query string to be searched on Booking.com",
+            "prefill": "Paris",
+            "editor": "textfield"
+        },
+        "sortBy": {
+            "title": "Order results by",
+            "type": "string",
+            "description": "Hotel attribute by which the results will be ordered",
+            "default": "bayesian_review_score",
+            "enum": [
+                "bayesian_review_score",
+                "popularity",
+                "price",
+                "review_score_and_price",
+                "class",
+                "class_asc",
+                "distance_from_landmark&dst_landmark=cc"
+            ],
+            "enumTitles": [
+                "Rating",
+                "Popularity",
+                "Price",
+                "Rating and price",
+                "Stars",
+                "Stars ascending",
+                "Distance from city centre"
+            ]
+        },
+        "minScore": {
+            "title": "Minimum rating",
+            "type": "string",
+            "description": "Minimum rating of a hotel",
+            "editor": "textfield"
+        },
+        "maxPages": {
+            "title": "Maximum pagination pages",
+            "type": "integer",
+            "description": "Number of pagination pages to be crawled",
+            "default": 20,
+            "maximum": 1000000
+        },
+        "checkIn": {
+            "title": "Check-in date (mm-dd-yyyy)",
+            "type": "string",
+            "description": "Check-in date",
+            "default": "",
+            "editor": "textfield"
+        },
+        "checkOut": {
+            "title": "Check-out date (mm-dd-yyyy)",
+            "type": "string",
+            "description": "Check-out date",
+            "default": "",
+            "editor": "textfield"
+        },
+        "rooms": {
+            "title": "Number of rooms",
+            "type": "integer",
+            "description": "Number of rooms for the search",
+            "default": 1,
+            "maximum": 50
+        },
+        "adults": {
+            "title": "Number of adults",
+            "type": "integer",
+            "description": "Number of adults for the search",
+            "default": 2,
+            "maximum": 50
+        },
+        "children": {
+            "title": "Number of children",
+            "type": "integer",
+            "description": "Number of children for the search",
+            "default": 0,
+            "maximum": 50
+        },
+        "currency": {
+            "title": "Preferred currency",
+            "type": "string",
+            "description": "Currency code to be set on the site",
+            "default": "EUR",
+            "editor": "textfield"
+        },
+        "language": {
+            "title": "Language",
+            "type": "string",
+            "description": "Language code to be set on the site",
+            "default": "en-gb",
+            "editor": "textfield"
+        },
+        "proxyConfig": {
+            "title": "Proxy configuration",
+            "type": "object",
+            "description": "Optionally use Apify Proxy",
+            "default": { "useApifyProxy": true },
+            "editor": "proxy"
+        }
+    },
+    "required": ["search"]
+}

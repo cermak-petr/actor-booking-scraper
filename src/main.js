@@ -262,10 +262,16 @@ Apify.main(async () => {
                 }
             });
 
-            // Hide WebDriver and return new page.
+            // Hide WebDriver and randomize the request.
             await Apify.utils.puppeteer.hideWebDriver(page);
             const userAgent = Apify.utils.getRandomUserAgent();
             await page.setUserAgent(userAgent);
+            const cookies = await page.cookies('https://www.booking.com');
+            await page.deleteCookie(...cookies);
+            await page.viewport({
+                width: 1024 + Math.floor(Math.random() * 100),
+                height: 768 + Math.floor(Math.random() * 100)
+            });
             return page.goto(request.url, { timeout: 200000 });
         },
     });

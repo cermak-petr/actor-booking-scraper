@@ -10,7 +10,7 @@
             "default": true
         },
         "useFilters": {
-            "title": "Use criteria filters (necessary for more than 1000 results)",
+            "title": "Circumvent 1000 results limitation (uses criteria filters, slower)",
             "type": "boolean",
             "description": "The crawler will enqueue all the different criteria filtered pages, this will overcome the 1000 results limit, but the scrape will take significantly longer.",
             "default": false

@@ -264,6 +264,8 @@ Apify.main(async () => {
 
             // Hide WebDriver and return new page.
             await Apify.utils.puppeteer.hideWebDriver(page);
+            const userAgent = Apify.utils.getRandomUserAgent();
+            await page.setUserAgent(userAgent);
             return page.goto(request.url, { timeout: 200000 });
         },
     });

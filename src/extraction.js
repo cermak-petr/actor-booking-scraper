@@ -24,7 +24,6 @@ const extractRooms = async (page) => {
     // Iterate all table rows.
     const rows = await page.$$('.hprt-table > tbody > tr:not(.hprt-cheapest-block-row)');
     if (rows && rows.length > 0) { console.log('extracting ' + rows.length + ' rooms...'); }
-    let ii = 0;
     for (const row of rows) {
         const roomRow = await row.$('.hprt-table-cell-roomtype');
         if (roomRow) {
@@ -35,7 +34,7 @@ const extractRooms = async (page) => {
             // Iterate and parse all room facilities.
             const facilities = roomRow ? await roomRow.$$('.hprt-facilities-facility') : null;
             features = [];
-            if (facilities) {
+            /*if (facilities) {
                 for (const f of facilities) {
                     const fText = (await getAttribute(f, 'textContent')).replace('•', '').trim();
                     if (fText.indexOf('ft²') > -1) {
@@ -44,7 +43,7 @@ const extractRooms = async (page) => {
                         features.push(nText);
                     } else { features.push(fText); }
                 }
-            }
+            }*/
         }
 
         // Extract data for each room.
@@ -75,7 +74,6 @@ const extractRooms = async (page) => {
             }
         }
         await rooms.push(room);
-        console.log('room ' + (++ii));
     }
     return rooms;
 };

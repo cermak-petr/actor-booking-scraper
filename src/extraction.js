@@ -34,7 +34,7 @@ const extractRooms = async (page) => {
             // Iterate and parse all room facilities.
             const facilities = roomRow ? await roomRow.$$('.hprt-facilities-facility') : null;
             features = [];
-            if (facilities) {
+            /*if (facilities) {
                 for (const f of facilities) {
                     const fText = (await getAttribute(f, 'textContent')).replace('•', '').trim();
                     if (fText.indexOf('ft²') > -1) {
@@ -43,7 +43,7 @@ const extractRooms = async (page) => {
                         features.push(nText);
                     } else { features.push(fText); }
                 }
-            }
+            }*/
         }
 
         // Extract data for each room.

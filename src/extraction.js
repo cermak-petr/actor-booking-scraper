@@ -114,7 +114,8 @@ const extractRoomsJQuery = () => {
             const facilities = roomRow ? roomRow.find('.hprt-facilities-facility') : null;
             features = [];
             if (facilities.length > 0) {
-                facilities.each(f => {
+                facilities.each((facility) => {
+                    const f = $(facility);
                     const fText = f.text().replace('•', '').trim();
                     if (fText.indexOf('ft²') > -1) {
                         const num = parseInt(fText.split(' ')[0], 10);

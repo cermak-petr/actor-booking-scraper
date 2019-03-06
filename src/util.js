@@ -74,7 +74,13 @@ module.exports.getWorkingBrowser = async (startUrl, input) => {
         console.log('testing proxy...');
         const browser = await Apify.launchPuppeteer(input.proxyConfig || {});
         const page = await browser.newPage();
-        await page.goto(startUrl);
+        try{
+            await page.goto(startUrl);
+            await page.waitForNavigation();
+        } catch(e) {
+            console.log('invalid proxy, retrying...');
+            continue;
+        }
         const pageUrl = await page.url();
         if (pageUrl.indexOf(sortBy) > -1 || i === 999) {
             console.log('valid proxy found');

@@ -128,9 +128,7 @@ const extractRoomsJQuery = () => {
 
         // Extract data for each room.
         let occupancy;
-        try {
-            occupancy = occExtractor($('.hprt-occupancy-occupancy-info'));
-        } catch (e) { occupancy = null; }
+        try { occupancy = occExtractor(row); } catch (e) { occupancy = null; }
         const persons = occupancy ? occupancy.match(/\d+/) : null;
         const priceE = row.find('.hprt-price-price');
         const priceT = priceE.length > 0 ? priceE.text().replace(/\s|,/g, '').match(/(\d|\.)+/) : null;
@@ -149,7 +147,7 @@ const extractRoomsJQuery = () => {
         if (cond.length > 0) {
             room.conditions = [];
             for(let ci = 0; ci < cond.length; ci++){
-                const cText = cond.eq(ci).text();
+                const cText = cond.eq(ci).text().trim();
                 room.conditions.push(cText.replace(/(\n|\s)+/g, ' '));
             }
         }

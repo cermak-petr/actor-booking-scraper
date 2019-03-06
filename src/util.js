@@ -79,6 +79,7 @@ module.exports.getWorkingBrowser = async (startUrl, input) => {
             await page.waitForNavigation();
         } catch(e) {
             console.log('invalid proxy, retrying...');
+            console.log(e);
             continue;
         }
         const pageUrl = await page.url();
@@ -88,7 +89,6 @@ module.exports.getWorkingBrowser = async (startUrl, input) => {
             return browser;
         }
         console.log('invalid proxy, retrying...');
-        console.log(await page.url());
         await browser.close();
     }
 };

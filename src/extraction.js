@@ -173,7 +173,7 @@ module.exports.extractDetail = async (page, ld, input) => {
     };
     const html = await page.content();
     const name = await page.$('#hp_hotel_name');
-    const nameText = await getAttribute(name, 'textContent').split('\n');
+    const nameText = (await getAttribute(name, 'textContent')).split('\n');
     const hType = await page.$('.hp__hotel-type-badge');
     const bFast = await page.$('.ph-item-copy-breakfast-option');
     const starIcon = await page.$('i.bk-icon-stars');

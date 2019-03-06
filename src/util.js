@@ -88,6 +88,7 @@ module.exports.getWorkingBrowser = async (startUrl, input) => {
             return browser;
         }
         console.log('invalid proxy, retrying...');
+        console.log(await page.url());
         await browser.close();
     }
 };

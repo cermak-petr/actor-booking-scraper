@@ -105,14 +105,14 @@ const extractRoomsJQuery = () => {
     for(let i = 0; i < rows.length; i++){
         const row = rows.eq(i);
         const roomRow = row.find('.hprt-table-cell-roomtype');
-        if (roomRow) {
+        if (roomRow.length > 0) {
             roomType = row.find('.hprt-roomtype-icon-link');
             const bedType = row.find('.hprt-roomtype-bed');
             bedText = bedType.length > 0 ? bedType.text() : null;
 
             // Iterate and parse all room facilities.
-            const facilities = roomRow ? roomRow.find('.hprt-facilities-facility') : null;
             features = [];
+            const facilities = roomRow.find('.hprt-facilities-facility');
             if (facilities.length > 0) {
                 for(let fi = 0; fi < facilities.length; fi++){
                     const f = facilities.eq(fi);
@@ -136,7 +136,7 @@ const extractRoomsJQuery = () => {
         const cond = row.find('.hprt-conditions li');
 
         const room = { available: true };
-        if (roomType) { room.roomType = roomType.text(); }
+        if (roomType) { room.roomType = roomType.text().trim(); }
         if (bedText) { room.bedType = bedText.replace(/\n+/g, ' '); }
         if (persons) { room.persons = parseInt(persons[0], 10); }
         if (priceT && priceC) {

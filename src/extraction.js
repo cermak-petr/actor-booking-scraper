@@ -102,8 +102,8 @@ const extractRoomsJQuery = () => {
     // Iterate all table rows.
     const rows = $('.hprt-table > tbody > tr:not(.hprt-cheapest-block-row)');
     if (rows && rows.length > 0) { console.log('extracting ' + rows.length + ' rooms...'); }
-    rows.each(oRow => {
-        const row = $(oRow);
+    for(let i = 0; i < rows.length; i++){
+        const row = rows.eq(i);
         const roomRow = row.find('.hprt-table-cell-roomtype');
         if (roomRow) {
             roomType = row.find('.hprt-roomtype-icon-link');
@@ -153,7 +153,7 @@ const extractRoomsJQuery = () => {
             }
         }
         rooms.push(room);
-    });
+    }
     return rooms;
 };
 

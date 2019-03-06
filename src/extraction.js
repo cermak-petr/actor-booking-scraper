@@ -115,7 +115,7 @@ const extractRoomsJQuery = () => {
             features = [];
             if (facilities.length > 0) {
                 for(let fi = 0; fi < facilities.length; fi++){
-                    const f = facilities.eq(i);
+                    const f = facilities.eq(fi);
                     const fText = f.text().replace('•', '').trim();
                     if (fText.indexOf('ft²') > -1) {
                         const num = parseInt(fText.split(' ')[0], 10);

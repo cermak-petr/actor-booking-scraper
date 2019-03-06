@@ -34,7 +34,7 @@ const extractRooms = async (page) => {
             // Iterate and parse all room facilities.
             const facilities = roomRow ? await roomRow.$$('.hprt-facilities-facility') : null;
             features = [];
-            /*if (facilities) {
+            if (facilities) {
                 for (const f of facilities) {
                     const fText = (await getAttribute(f, 'textContent')).replace('•', '').trim();
                     if (fText.indexOf('ft²') > -1) {
@@ -43,11 +43,11 @@ const extractRooms = async (page) => {
                         features.push(nText);
                     } else { features.push(fText); }
                 }
-            }*/
+            }
         }
 
         // Extract data for each room.
-        /*let occupancy;
+        let occupancy;
         try {
             occupancy = await row.$eval('.hprt-occupancy-occupancy-info', occExtractor);
         } catch (e) { occupancy = null; }
@@ -55,10 +55,10 @@ const extractRooms = async (page) => {
         const priceE = await row.$('.hprt-price-price');
         const priceT = priceE ? (await getAttribute(priceE, 'textContent')).replace(/\s|,/g, '').match(/(\d|\.)+/) : null;
         const priceC = priceE ? (await getAttribute(priceE, 'textContent')).replace(/\s|,/g, '').match(/[^\d.]+/) : null;
-        const cond = await row.$$('.hprt-conditions li');*/
+        const cond = await row.$$('.hprt-conditions li');
 
         const room = { available: true };
-        /*if (roomType) { room.roomType = await getAttribute(roomType, 'textContent'); }
+        if (roomType) { room.roomType = await getAttribute(roomType, 'textContent'); }
         if (bedText) { room.bedType = bedText.replace(/\n+/g, ' '); }
         if (persons) { room.persons = parseInt(persons[0], 10); }
         if (priceT && priceC) {
@@ -72,7 +72,7 @@ const extractRooms = async (page) => {
                 const cText = await getAttribute(c, 'textContent');
                 room.conditions.push(cText.replace(/(\n|\s)+/g, ' '));
             }
-        }*/
+        }
         await rooms.push(room);
     }
     return rooms;

@@ -89,14 +89,14 @@ const extractRoomsJQuery = () => {
     const $ = jQuery;
 
     // Function for extracting occupancy info.
-    const occExtractor = (hprt) => {
-        if (!hprt || hprt.length < 1) { return null; }
+    const occExtractor = (row) => {
+        if (!row || row.length < 1) { return null; }
         /* eslint-disable */
-        const occ1 = document.querySelector('.hprt-occupancy-occupancy-info .invisible_spoken');
-        const occ2 = document.querySelector('.hprt-occupancy-occupancy-info').getAttribute('data-title');
-        const occ3 = document.querySelector('.hprt-occupancy-occupancy-info').textContent;
+        const occ1 = row.find('.hprt-occupancy-occupancy-info .invisible_spoken');
+        const occ2 = row.find('.hprt-occupancy-occupancy-info').attr('data-title');
+        const occ3 = row.find('.hprt-occupancy-occupancy-info').text();
         /* eslint-enable */
-        return occ1 ? occ1.textContent : (occ2 || occ3);
+        return occ1.length > 0 ? occ1.text() : (occ2 || occ3);
     };
 
     // Iterate all table rows.

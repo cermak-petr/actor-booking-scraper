@@ -99,14 +99,14 @@
             "type": "string",
             "description": "Currency code to be set on the site",
             "default": "EUR",
-            "editor": "textfield"
+            "enum": ["ARS","AUD","AZN","BHD","BRL","BGN","CAD","XOF","CLP","CNY","COP","CZK","DKK","EGP","EUR","FJD","GEL","HKD","HUF","INR","IDR","ILS","JPY","JOD","KZT","KRW","KWD","MYR","MXN","MDL","NAD","TWD","NZD","NOK","OMR","PLN","GBP","QAR","RON","RUB","SAR","SGD","ZAR","SEK","CHF","THB","TRY","AED","USD","UAH"]
         },
         "language": {
             "title": "Language",
             "type": "string",
             "description": "Language code to be set on the site",
             "default": "en-gb",
-            "editor": "textfield"
+            "enum": ["en-gb","en-us","de","nl","fr","es","es-ar","ca","it","pt-pt","pt-br","no","fi","sv","da","cs","hu","ro","ja","zh-cn","zh-tw","pl","el","ru","tr","bg","ar","ko","he","lv","uk","id","ms","th","et","hr","lt","sk","sr","sl","vi","tl","is"]
         },
         "proxyConfig": {
             "title": "Proxy configuration",

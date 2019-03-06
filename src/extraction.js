@@ -68,8 +68,8 @@ const extractRooms = async (page) => {
         } else { room.available = false; }
         if (cond.length > 0) {
             room.conditions = [];
-            for(let ci = 0; ci < cond.length; ci++){
-                const cText = cond.eq(ci).text();
+            for(const c of cond){
+                const cText = await getAttribute(c, 'textContent');
                 room.conditions.push(cText.replace(/(\n|\s)+/g, ' '));
             }
         }

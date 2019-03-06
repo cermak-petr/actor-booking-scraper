@@ -219,7 +219,7 @@ Apify.main(async () => {
 
         // Function for ignoring all unnecessary requests.
         gotoFunction: async ({ page, request }) => {
-            /*await page.setRequestInterception(true);
+            await page.setRequestInterception(true);
 
             page.on('request', async (nRequest) => {
                 const url = nRequest.url();
@@ -262,7 +262,7 @@ Apify.main(async () => {
                         expires: Date.now() + (maxAge * 1000),
                     };
                 }
-            });*/
+            });
 
             // Hide WebDriver and return new page.
             await Apify.utils.puppeteer.hideWebDriver(page);

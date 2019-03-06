@@ -79,6 +79,84 @@ const extractRooms = async (page) => {
 };
 
 /**
+ * Extracts information about all rooms listed by the hotel using jQuery in browser context.
+ */
+const extractRoomsJQuery = () => {
+    let roomType;
+    let bedText;
+    let features;
+    const rooms = [];
+
+    // Function for extracting occupancy info.
+    const occExtractor = (hprt) => {
+        if (!hprt || hprt.length < 1) { return null; }
+        /* eslint-disable */
+        const occ1 = document.querySelector('.hprt-occupancy-occupancy-info .invisible_spoken');
+        const occ2 = document.querySelector('.hprt-occupancy-occupancy-info').getAttribute('data-title');
+        const occ3 = document.querySelector('.hprt-occupancy-occupancy-info').textContent;
+        /* eslint-enable */
+        return occ1 ? occ1.textContent : (occ2 || occ3);
+    };
+
+    // Iterate all table rows.
+    const rows = $('.hprt-table > tbody > tr:not(.hprt-cheapest-block-row)');
+    if (rows && rows.length > 0) { console.log('extracting ' + rows.length + ' rooms...'); }
+    rows.each(oRow => {
+        const row = $(oRow);
+        const roomRow = row.find('.hprt-table-cell-roomtype');
+        if (roomRow) {
+            roomType = row.find('.hprt-roomtype-icon-link');
+            const bedType = row.find('.hprt-roomtype-bed');
+            bedText = bedType.length > 0 ? bedType.text() : null;
+
+            // Iterate and parse all room facilities.
+            const facilities = roomRow ? roomRow.find('.hprt-facilities-facility') : null;
+            features = [];
+            if (facilities.length > 0) {
+                facilities.each(f => {
+                    const fText = f.text().replace('•', '').trim();
+                    if (fText.indexOf('ft²') > -1) {
+                        const num = parseInt(fText.split(' ')[0], 10);
+                        const nText = `${parseInt(num * 0.092903, 10)} m²`;
+                        features.push(nText);
+                    } else { features.push(fText); }
+                });
+            }
+        }
+
+        // Extract data for each room.
+        let occupancy;
+        try {
+            occupancy = occExtractor($('.hprt-occupancy-occupancy-info'));
+        } catch (e) { occupancy = null; }
+        const persons = occupancy ? occupancy.match(/\d+/) : null;
+        const priceE = row.find('.hprt-price-price');
+        const priceT = priceE.length > 0 ? priceE.text().replace(/\s|,/g, '').match(/(\d|\.)+/) : null;
+        const priceC = priceE.length > 0 ? priceE.text().replace(/\s|,/g, '').match(/[^\d.]+/) : null;
+        const cond = row.find('.hprt-conditions li');
+
+        const room = { available: true };
+        if (roomType) { room.roomType = roomType.text(); }
+        if (bedText) { room.bedType = bedText.replace(/\n+/g, ' '); }
+        if (persons) { room.persons = parseInt(persons[0], 10); }
+        if (priceT && priceC) {
+            room.price = parseFloat(priceT[0]);
+            room.currency = priceC[0];
+            room.features = features;
+        } else { room.available = false; }
+        if (cond.length > 0) {
+            room.conditions = [];
+            for (const c of cond) {
+                const cText = c.text();
+                room.conditions.push(cText.replace(/(\n|\s)+/g, ' '));
+            }
+        }
+        rooms.push(room);
+    });
+    return rooms;
+};
+
+/**
  * Extracts information from the detail page.
  * @param {Page} page - The Puppeteer page object.
  * @param {Object} ld - JSON-LD Object extracted from the page.
@@ -106,7 +184,8 @@ module.exports.extractDetail = async (page, ld, input) => {
     const img1 = await getAttribute(await page.$('.slick-track img'), 'src');
     const img2 = await getAttribute(await page.$('#photo_wrapper img'), 'src');
     const img3 = html.match(/large_url: '(.+)'/);
-    const rooms = await extractRooms(page);
+    //const rooms = await extractRooms(page);
+    const rooms = await page.evaluate(extractRoomsJQuery);
     return {
         url: addUrlParameters((await page.url()).split('?')[0], input),
         name: await getAttribute(name, 'textContent'),

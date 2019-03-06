@@ -300,7 +300,7 @@ module.exports.listPageFunction = (input) => new Promise((resolve, reject) => {
                 location: latlng ? { lat: latlng[0], lng: latlng[1] } : null,
                 image: image
             };
-            if (!input.useFilters) { item.totalFound = found; }
+            // if (!input.useFilters) { item.totalFound = found; }
             if (item.rating && item.rating >= (input.minScore || 0)) { result.push(item); }
             if (++finished >= started) { resolve(result); }
         });

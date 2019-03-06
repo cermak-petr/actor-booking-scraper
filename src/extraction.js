@@ -114,15 +114,15 @@ const extractRoomsJQuery = () => {
             const facilities = roomRow ? roomRow.find('.hprt-facilities-facility') : null;
             features = [];
             if (facilities.length > 0) {
-                facilities.each((facility) => {
-                    const f = $(facility);
+                for(let fi = 0; fi < facilities.length; fi++){
+                    const f = facilities.eq(i);
                     const fText = f.text().replace('•', '').trim();
                     if (fText.indexOf('ft²') > -1) {
                         const num = parseInt(fText.split(' ')[0], 10);
                         const nText = `${parseInt(num * 0.092903, 10)} m²`;
                         features.push(nText);
                     } else { features.push(fText); }
-                });
+                }
             }
         }
 

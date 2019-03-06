@@ -148,10 +148,10 @@ const extractRoomsJQuery = () => {
         } else { room.available = false; }
         if (cond.length > 0) {
             room.conditions = [];
-            cond.each((c) => {
-                const cText = c.textContent;
+            for(let ci = 0; ci < cond.length; ci++){
+                const cText = cond.eq(ci).text();
                 room.conditions.push(cText.replace(/(\n|\s)+/g, ' '));
-            });
+            }
         }
         rooms.push(room);
     }

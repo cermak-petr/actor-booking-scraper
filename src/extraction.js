@@ -86,6 +86,7 @@ const extractRoomsJQuery = () => {
     let bedText;
     let features;
     const rooms = [];
+    const $ = jQuery;
 
     // Function for extracting occupancy info.
     const occExtractor = (hprt) => {

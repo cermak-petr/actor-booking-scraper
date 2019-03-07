@@ -281,7 +281,9 @@ module.exports.listPageFunction = (input) => new Promise((resolve, reject) => {
             const found = num ? parseInt(num, 10) : null;
             const starAttr = jThis.find('i.star_track svg').attr('class');
             const stars = starAttr ? starAttr.match(/\d/) : null;
-            const loc = jThis.find('.bui-link--primary').attr('data-coords');
+            const buiLink = jThis.find('.bui-link--primary');
+            const address = buiLink.contents().eq(0).text().trim();
+            const loc = buiLink.attr('data-coords');
             const latlng = loc ? loc.split(',') : null;
             const image = jThis.find('.sr_item_photo_link.sr_hotel_preview_track').attr('style');
             const imageRegexp = /url\((.*?)\)/gm;
@@ -297,6 +299,7 @@ module.exports.listPageFunction = (input) => new Promise((resolve, reject) => {
                 currency: pc ? pc[0].trim() : null,
                 roomType: rl.length > 0 ? rl[0].textContent.trim() : null,
                 persons: occ || null,
+                address: address,
                 location: latlng ? { lat: latlng[0], lng: latlng[1] } : null,
                 image: image
             };

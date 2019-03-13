@@ -177,6 +177,9 @@ contain data only if the `checkIn` and `checkOut` INPUT attributes are set.
 
 ## Notes
 
+* The actor will not work without proxy, i.e. if you try running it without setting a proxy, it will
+  fail with a message explaining exactly that.
+
 * Booking.com will only display maximum of 1000 results, if you need to circumvent this limitation,  
   you can utilize the `useFilters` INPUT attribute. However, in such case it will not be possible  
   to use any limiting filters in start URLs, because the scraper will override those.

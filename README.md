@@ -94,6 +94,82 @@ The `startUrls` attribute should cotain an array of URLs as follows:
 }
 ```
 
+## Output examples
+
+In case of using the `simple` INPUT attribute, an example output for a single hotel can look like this:
+
+```javascript
+{
+  "url": "https://www.booking.com/hotel/cz/elia-ky-kra-snohorska-c-apartments-prague.en-gb.html",
+  "name": "Centrum Apartments Old Town",
+  "rating": 10,
+  "reviews": 7,
+  "stars": 4,
+  "price": 86,
+  "currency": "€",
+  "roomType": "Deluxe Three-Bedroom Apartment with Terrace",
+  "persons": 4,
+  "address": "Prague 01, Prague",
+  "location": {
+    "lat": "14.4199419021606",
+    "lng": "50.0903216331068"
+  }
+}
+```
+
+Otherwise the output will be much more comprehensive, especially the `rooms` array, which will however  
+contain data only if the `checkIn` and `checkOut` INPUT attributes are set.
+
+```javascript
+{
+  "url": "https://www.booking.com/hotel/cz/elia-ky-kra-snohorska-c-apartments-prague.en-gb.html",
+  "name": "Centrum Apartments Old Town",
+  "type": "Apartment",
+  "description": "Situated in the centre of Prague in a historical building near the Pařížská street, 500 metres from the Old Town Square, the Pragueaparts Old town E offers...",
+  "stars": "4",
+  "rating": 10,
+  "reviews": 7,
+  "breakfast": null,
+  "checkIn": "15:00",
+  "checkOut": "00:00",
+  "location": {
+    "lat": "50.0903216",
+    "lng": "14.4199419"
+  },
+  "address": {
+    "full": "Elišky Krásnohorské 2, Prague, 11000, Czech Republic",
+    "postalCode": "11000",
+    "street": "Elišky Krásnohorské 2",
+    "country": "Czech Republic",
+    "region": ""
+  },
+  "image": "https://t-ec.bstatic.com/images/hotel/max1024x768/183/183313960.jpg",
+  "rooms": [
+    {
+      "available": true,
+      "roomType": "Deluxe Three-Bedroom Apartment with Terrace",
+      "bedType": " Bedroom 1: 1 extra-large double bed Bedroom 2: 2 single beds Bedroom 3: 3 single beds and 1 sofa bed ",
+      "persons": 1,
+      "price": 85.54,
+      "currency": "€",
+      "features": [
+        "80 m²",
+        "City view",
+        "Terrace",
+        "Flat-screen TV",
+        "Air conditioning",
+        "Private bathroom",
+        ...
+      ],
+      "conditions": [
+        "Non-refundable"
+      ]
+    },
+    ...
+  ]
+}
+```
+
 ## Notes
 
 * Booking.com will only display maximum of 1000 results, if you need to circumvent this limitation,  

@@ -1,4 +1,4 @@
-# actor-booking-hotels
+# actor-booking-scraper
 
 Apify actor for extracting data about hotels from Booking.com.
 

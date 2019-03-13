@@ -2,6 +2,11 @@
 
 Apify actor for extracting data about hotels from Booking.com.
 
+Booking.com provides various types of accommodation all around the world. The user interface  
+is quite friendly for a human user, however to get the data in a machine processable format  
+is not a simple task, since there is no official Booking.com API. This is where this new Apify  
+actor comes in handy.
+
 This actor extracts hotel data from Booking.com, it can either extract directly from  
 the hotel list page or navigate to the detail page to get more detailed information.  
 The results can be ordered by any criteria supported by Booking.com.  

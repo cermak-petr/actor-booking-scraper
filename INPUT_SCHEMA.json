@@ -117,5 +117,6 @@
             "description": "The crawler will enqueue all the different criteria filtered pages, this will overcome the 1000 results limit, but the scrape will take significantly longer.",
             "default": false
         }
-    }
+    },
+    "required": []
 }

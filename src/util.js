@@ -49,8 +49,10 @@ module.exports.addUrlParameters = (url, input) => {
         const co = input.checkOut.split(/-|\//);
         //url += `&checkin_year_month_monthday=${ci[2]}-${ci[0]}-${ci[1]}`;
         //url += `&checkout_year_month_monthday=${co[2]}-${co[0]}-${co[1]}`;
-        url += `&checkin=${ci[2]}-${ci[1]}-${ci[0]}`;
-        url += `&checkout=${co[2]}-${co[1]}-${co[0]}`;
+        //url += `&checkin=${ci[2]}-${ci[1]}-${ci[0]}`;
+        //url += `&checkout=${co[2]}-${co[1]}-${co[0]}`;
+        url += `&checkout_year=${co[2]}&checkout_month=${co[0]}&checkout_monthday=${co[1]}`;
+        url += `&checkin_year=${ci[2]}&checkin_month=${ci[0]}&checkin_monthday=${ci[1]}`;
     }
     if (input.currency) {
         url += `&selected_currency=${input.currency.toUpperCase()}&changed_currency=1&top_currency=1`;

@@ -10,6 +10,12 @@
             "prefill": "Paris",
             "editor": "textfield"
         },
+        "startUrls": {
+            "title": "Start URLs",
+            "type": "array",
+            "description": "URLs to start with instead of search query",
+            "editor": "requestListSources"
+        },
         "sortBy": {
             "title": "Order results by",
             "type": "string",

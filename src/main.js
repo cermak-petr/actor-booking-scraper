@@ -53,8 +53,9 @@ Apify.main(async () => {
         await requestList.initialize();
     } else {
         // Create startURL based on provided INPUT.
+        const dType = input.destType || 'city';
         const query = encodeURIComponent(input.search);
-        startUrl = `https://www.booking.com/searchresults.html?dest_type=city;ss=${query}&order=${sortBy}`;
+        startUrl = `https://www.booking.com/searchresults.html?dest_type=${dType};ss=${query}&order=${sortBy}`;
         startUrl = addUrlParameters(startUrl, input);
 
         // Enqueue all pagination pages.

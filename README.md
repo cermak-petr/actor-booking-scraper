@@ -22,6 +22,7 @@ Input is a JSON object with the following properties:
 ```javascript
 {
     "search": SEARCH_QUERY,
+    "destType": DESTINATION_TYPE,
     "simple": EXTRACT_FROM_LIST,
     "useFilters": USE_CRITERIA_FILTERING,
     "minScore": MINIMUM_HOTEL_RATING,
@@ -40,6 +41,7 @@ Input is a JSON object with the following properties:
 ```
 
 * `search` is the only required attribute. This is the Booking.com search query.  
+* `destType` specifies type of search, available values are `city` and `region`.  
 * `simple` defines if the data should be extracted just from the list page, default is `false`.  
 * `useFilters` sets if the crawler should utilize criteria filters to overcome the limit for 1000 results.  
 * `minScore` specifies the minimum allowed rating of the hotel to be included in results, default is `8.4`.  

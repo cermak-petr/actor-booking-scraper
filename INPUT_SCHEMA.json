@@ -10,6 +10,20 @@
             "prefill": "Paris",
             "editor": "textfield"
         },
+        "destType": {
+            "title": "Destination type",
+            "type": "string",
+            "description": "Type of the destination",
+            "default": "city",
+            "enum": [
+                "city",
+                "region"
+            ],
+            "enumTitles": [
+                "City",
+                "Region"
+            ]
+        },
         "startUrls": {
             "title": "Start URLs",
             "type": "array",

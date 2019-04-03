@@ -18,6 +18,9 @@ Apify.main(async () => {
     if (!input.search && !input.startUrls) {
         throw new Error('Missing "search" or "startUrls" attribute in INPUT!');
     }
+    else if(input.search && input.startUrls && input.search.trim().length > 0){
+        throw new Error('It is not possible to use both "search" and "startUrls" attributes in INPUT!');
+    }
     if (!(input.proxyConfig && input.proxyConfig.useApifyProxy)) {
         throw new Error('This actor cannot be used without Apify proxy.');
     }

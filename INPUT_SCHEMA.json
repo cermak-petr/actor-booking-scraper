@@ -118,6 +118,20 @@
             "enum": ["en-gb","en-us","de","nl","fr","es","es-ar","ca","it","pt-pt","pt-br","no","fi","sv","da","cs","hu","ro","ja","zh-cn","zh-tw","pl","el","ru","tr","bg","ar","ko","he","lv","uk","id","ms","th","et","hr","lt","sk","sr","sl","vi","tl","is"],
             "enumTitles": ["English (UK)","English (US)","Deutsch","Nederlands","Français","Español","Español (AR)","Català","Italiano","Português (PT)","Português (BR)","Norsk","Suomi","Svenska","Dansk","Čeština","Magyar","Română","日本語","简体中文","繁體中文","Polski","Ελληνικά","Русский","Türkçe","Български","العربية","한국어","עברית","Latviski","Українська","Bahasa Indonesia","Bahasa Malaysia","ภาษาไทย","Eesti","Hrvatski","Lietuvių","Slovenčina","Srpski","Slovenščina","Tiếng Việt","Filipino","Íslenska"]
         },
+        "minPrice": {
+            "title": "Minimum price",
+            "type": "integer",
+            "description": "Minimum price",
+            "default": 0,
+            "maximum": 9999999
+        },
+        "maxPrice": {
+            "title": "Maximum price",
+            "type": "integer",
+            "description": "Maximum price",
+            "default": 9999999,
+            "maximum": 9999999
+        },
         "proxyConfig": {
             "title": "Proxy configuration",
             "type": "object",

@@ -65,7 +65,7 @@ Apify.main(async () => {
         startUrl += '&rows=20';
         console.log(`startUrl: ${startUrl}`);
         await requestQueue.addRequest(new Apify.Request({url: startUrl, userData: {label: 'start'}}));
-        if(!input.useFilters && input.maxPages){
+        if(!input.useFilters && input.propertyType == 'none' && input.maxPages){
             for(let i = 1; i <= input.maxPages; i++){
                 await requestQueue.addRequest(new Apify.Request({
                     url: startUrl + '&offset=' + 20*i, 

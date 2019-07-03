@@ -224,7 +224,7 @@ Apify.main(async () => {
                         if (migrating) { await Apify.setValue('STATE', state); }
                         if (toBeAdded.length > 0) { await Apify.pushData(toBeAdded); }
                     }
-                } else if (!input.useFilters || await isFiltered(page)) { // If not, enqueue the detail pages to be extracted.
+                } else if ((!input.useFilters && input.propertyType == 'none') || await isFiltered(page)) { // If not, enqueue the detail pages to be extracted.
                     console.log('enqueuing detail pages...');
                     /*await enqueueLinks(page, requestQueue, '.hotel_name_link', null, 'detail',
                         fixUrl('&', input), (link) => getAttribute(link, 'textContent'));*/

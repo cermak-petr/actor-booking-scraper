@@ -253,7 +253,6 @@ Apify.main(async () => {
                         if (tValue) {
                             const value = parseInt(tValue.replace(/\.|,|\s/g, '').match(/\d+/));
                             if (href && value > input.minPrice && value < input.maxPrice) {
-                                console.log('price: ' + value);
                                 await requestQueue.addRequest(new Apify.Request({
                                     userData: { label: 'detail' },
                                     url: urlMod ? urlMod(href) : href,

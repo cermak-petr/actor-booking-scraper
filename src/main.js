@@ -166,16 +166,22 @@ Apify.main(async () => {
                     if(baseUrl.indexOf('offset') < 0){
                         console.log('enqueuing pagination pages...');
                         const countElem = await page.$('.sorth1');
-                        const countData = (await getAttribute(countElem, 'textContent')).replace(/\.|,|\s/g, '').match(/\d+/);
-                        if(countData){
-                            const count = Math.ceil(parseInt(countData[0])/20);
-                            console.log('pagination pages: ' + count);
-                            for(let i = 0; i <= count; i++){
-                                await requestQueue.addRequest(new Apify.Request({
-                                    url: baseUrl + '&rows=20&offset=' + 20*i, 
-                                    userData: {label: 'page'}
-                                }));
+                        try{
+                            const countData = (await getAttribute(countElem, 'textContent')).replace(/\.|,|\s/g, '').match(/\d+/);
+                            if(countData){
+                                const count = Math.ceil(parseInt(countData[0])/20);
+                                console.log('pagination pages: ' + count);
+                                for(let i = 0; i <= count; i++){
+                                    await requestQueue.addRequest(new Apify.Request({
+                                        url: baseUrl + '&rows=20&offset=' + 20*i, 
+                                        userData: {label: 'page'}
+                                    }));
+                                }
                             }
+                        }
+                        catch(e){
+                            console.log(e);
+                            await Apify.setValue('error.html', await page.content(), {contentType: 'text/html'});
                         }
                     }
                 }

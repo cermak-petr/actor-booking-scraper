@@ -188,6 +188,7 @@ Apify.main(async () => {
                     for(const filter of filters){
                         const fText = await getAttribute(filter, 'textContent');
                         if(fText == input.propertyType){
+                            console.log('Using filter: ' + fText);
                             await requestQueue.addRequest(new Apify.Request({
                                 userData: { label: 'page' },
                                 url: urlMod(href),

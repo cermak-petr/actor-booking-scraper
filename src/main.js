@@ -24,6 +24,9 @@ Apify.main(async () => {
     if (!(input.proxyConfig && input.proxyConfig.useApifyProxy)) {
         throw new Error('This actor cannot be used without Apify proxy.');
     }
+    if (input.useFilters && input.propertyType != 'none') {
+        throw new Error('Property type and filters cannot be used at the same time.');
+    }
     if (input.minScore) { input.minScore = parseFloat(input.minScore); }
     const sortBy = input.sortBy || 'bayesian_review_score';
 

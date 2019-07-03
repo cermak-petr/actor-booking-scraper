@@ -132,6 +132,13 @@
             "default": 9999999,
             "maximum": 9999999
         },
+        "propertyType": {
+            "title": "Preferred currency",
+            "type": "string",
+            "description": "Currency code to be set on the site",
+            "default": "EUR",
+            "enum": ["none", "Hotels", "Apartments", "Hostels", "Guest houses", "Homestays", "Bed and breakfasts", "Holiday homes", "Boats", "Villas", "Motels", "Holiday parks", "Campsites", "Luxury tents"]
+        },
         "proxyConfig": {
             "title": "Proxy configuration",
             "type": "object",

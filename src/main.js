@@ -187,8 +187,10 @@ Apify.main(async () => {
                     const urlMod = fixUrl('&');
                     for(const filter of filters){
                         const fText = await getAttribute(filter, 'textContent');
+                        console.log(fText);
                         if(fText == input.propertyType){
                             console.log('Using filter: ' + fText);
+                            const href = await getAttribute(filter, 'href');
                             await requestQueue.addRequest(new Apify.Request({
                                 userData: { label: 'page' },
                                 url: urlMod(href),

@@ -206,7 +206,7 @@ Apify.main(async () => {
                     console.log('enqueuing detail pages...');
                     /*await enqueueLinks(page, requestQueue, '.hotel_name_link', null, 'detail',
                         fixUrl('&', input), (link) => getAttribute(link, 'textContent'));*/
-                    const items = await page.$('.sr_item.sr_property_block');
+                    const items = await page.$$('.sr_item.sr_property_block');
                     const urlMod = fixUrl('&', input);
                     for(const item of items){
                         const link = await item.$('.hotel_name_link');

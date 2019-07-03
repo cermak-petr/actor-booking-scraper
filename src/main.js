@@ -186,7 +186,8 @@ Apify.main(async () => {
                     const filters = await page.$$('.filterelement');
                     const urlMod = fixUrl('&');
                     for(const filter of filters){
-                        const fText = await getAttribute(filter, 'textContent');
+                        const label = await filter.$('.filter_label');
+                        const fText = await getAttribute(label, 'textContent');
                         console.log(fText);
                         if(fText == input.propertyType){
                             console.log('Using filter: ' + fText);

@@ -208,12 +208,20 @@ Apify.main(async () => {
                         fixUrl('&', input), (link) => getAttribute(link, 'textContent'));*/
                     const items = await page.$$('.sr_item.sr_property_block');
                     const urlMod = fixUrl('&', input);
+                    const waitForPrice = async (item) => {
+                        for(let i = 0; i < 100; i++){
+                            const price = await item.$(':not(strong).site_price, .totalPrice, strong.price, .bui-price-display__value');
+                            const tValue = await getAttribute(price, 'textContent');
+                            if(!tValue){await page.waitFor(100);}
+                            else{return tValue;}
+                        }
+                        return null;
+                    };
                     for(const item of items){
                         const link = await item.$('.hotel_name_link');
-                        const price = await item.$(':not(strong).site_price, .totalPrice, strong.price, .bui-price-display__value');
+                        const tValue = await await waitForPrice(item);
                         const href = await getAttribute(link, 'href');
                         const text = await getAttribute(link, 'textContent');
-                        const tValue = await getAttribute(price, 'textContent');
                         if (tValue) {
                             const value = parseInt(tValue.replace(/\.|,|\s/g, '').match(/\d+/));
                             console.log('price: ' + value);

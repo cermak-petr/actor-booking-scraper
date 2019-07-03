@@ -165,7 +165,7 @@ Apify.main(async () => {
                     const baseUrl = await page.url();
                     if(baseUrl.indexOf('offset') < 0){
                         console.log('enqueuing pagination pages...');
-                        const countElem = await page.$('.sorth1');
+                        const countElem = await page.$('.sorth1, .sr_header h1');
                         try{
                             const countData = (await getAttribute(countElem, 'textContent')).replace(/\.|,|\s/g, '').match(/\d+/);
                             if(countData){

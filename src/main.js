@@ -188,7 +188,6 @@ Apify.main(async () => {
                     for(const filter of filters){
                         const label = await filter.$('.filter_label');
                         const fText = await getAttribute(label, 'textContent');
-                        console.log(fText);
                         if(fText == input.propertyType){
                             console.log('Using filter: ' + fText);
                             const href = await getAttribute(filter, 'href');

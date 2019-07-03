@@ -209,6 +209,7 @@ Apify.main(async () => {
                     const items = await page.$$('.sr_item.sr_property_block');
                     const urlMod = fixUrl('&', input);
                     const waitForPrice = async (item) => {
+                        await page.evaluate(item => item.scrollIntoView(), item);
                         for(let i = 0; i < 100; i++){
                             const price = await item.$(':not(strong).site_price, .totalPrice, strong.price, .bui-price-display__value');
                             const tValue = await getAttribute(price, 'textContent');

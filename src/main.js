@@ -216,6 +216,7 @@ Apify.main(async () => {
                         const tValue = await getAttribute(price, 'textContent');
                         if (tValue) {
                             const value = parseInt(tValue.replace(/\.|,|\s/g,' ').match(/\d+/));
+                            console.log('price: ' + value);
                             if (href && value > input.minPrice && value < input.maxPrice) {
                                 await requestQueue.addRequest(new Apify.Request({
                                     userData: { label: 'detail' },

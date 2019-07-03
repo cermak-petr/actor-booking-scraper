@@ -214,6 +214,7 @@ Apify.main(async () => {
                         const href = await getAttribute(link, 'href');
                         const text = await getAttribute(link, 'textContent');
                         const tValue = await getAttribute(price, 'textContent');
+                        console.log('price: ' + tValue);
                         const value = parseInt(tValue.replace(/\.|,|\s/g,' ').match(/\d+/));
                         if (href && value > input.minPrice && value < input.maxPrice) {
                             await requestQueue.addRequest(new Apify.Request({

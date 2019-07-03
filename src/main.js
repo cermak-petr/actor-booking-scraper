@@ -210,7 +210,7 @@ Apify.main(async () => {
                     const urlMod = fixUrl('&', input);
                     for(const item of items){
                         const link = await item.$('.hotel_name_link');
-                        const price = await item.$(':not(strong).site_price, .totalPrice, strong.price');
+                        const price = await item.$(':not(strong).site_price, .totalPrice, strong.price, .bui-price-display__value');
                         const href = await getAttribute(link, 'href');
                         const text = await getAttribute(link, 'textContent');
                         const tValue = await getAttribute(price, 'textContent');

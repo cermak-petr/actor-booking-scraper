@@ -181,7 +181,7 @@ Apify.main(async () => {
                 }
                 
                 // If property type is enabled, enqueue necessary page.
-                if(input.propertyType != 'none'){
+                if(input.propertyType != 'none' && !filtered){
                     console.log('enqueuing property type page...');
                     const filters = await page.$$('.filterelement');
                     const urlMod = fixUrl('&');

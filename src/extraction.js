@@ -304,7 +304,7 @@ module.exports.listPageFunction = (input) => new Promise((resolve, reject) => {
                 image: image
             };
             // if (!input.useFilters) { item.totalFound = found; }
-            if (item.rating && item.rating >= (input.minScore || 0)) { result.push(item); }
+            if (item.rating && item.rating >= (input.minScore || 0) && item.price > input.minPrice && item.price < input.maxPrice) { result.push(item); }
             if (++finished >= started) { resolve(result); }
         });
     });

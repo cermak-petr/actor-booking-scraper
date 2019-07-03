@@ -204,8 +204,25 @@ Apify.main(async () => {
                     }
                 } else if (!input.useFilters || await isFiltered(page)) { // If not, enqueue the detail pages to be extracted.
                     console.log('enqueuing detail pages...');
-                    await enqueueLinks(page, requestQueue, '.hotel_name_link', null, 'detail',
-                        fixUrl('&', input), (link) => getAttribute(link, 'textContent'));
+                    /*await enqueueLinks(page, requestQueue, '.hotel_name_link', null, 'detail',
+                        fixUrl('&', input), (link) => getAttribute(link, 'textContent'));*/
+                    const items = await page.$('.sr_item.sr_property_block');
+                    const urlMod = fixUrl('&', input);
+                    for(const item of items){
+                        const link = await item.$('.hotel_name_link');
+                        const price = await item.$('bui-price-display__value');
+                        const href = await getAttribute(link, 'href');
+                        const text = await getAttribute(link, 'textContent');
+                        const tValue = await getAttribute(price, 'textContent');
+                        const value = parseInt(tValue.replace(/\.|,|\s/g,' ').match(/\d+/));
+                        if (href && value > input.minPrice && value < input.maxPrice) {
+                            await requestQueue.addRequest(new Apify.Request({
+                                userData: { label: 'detail' },
+                                url: urlMod ? urlMod(href) : href,
+                                uniqueKey: text,
+                            }));
+                        }
+                    }
                 }
             }
         },

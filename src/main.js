@@ -184,7 +184,7 @@ Apify.main(async () => {
                 if(input.propertyType != 'none' && !filtered){
                     console.log('enqueuing property type page...');
                     const filters = await page.$$('.filterelement');
-                    const urlMod = fixUrl('&');
+                    const urlMod = fixUrl('&', input);
                     for(const filter of filters){
                         const label = await filter.$('.filter_label');
                         const fText = await getAttribute(label, 'textContent');
@@ -204,7 +204,7 @@ Apify.main(async () => {
                 // If filtering is enabled, enqueue necessary pages.
                 if(input.useFilters && !filtered){
                     console.log('enqueuing filtered pages...');
-                    await enqueueLinks(page, requestQueue, '.filterelement', null, 'page', fixUrl('&'), async link => {
+                    await enqueueLinks(page, requestQueue, '.filterelement', null, 'page', fixUrl('&', input), async link => {
                         const lText = await getAttribute(link, 'textContent');
                         return lText + '_' + 0;
                     });

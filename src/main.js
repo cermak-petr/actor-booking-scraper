@@ -158,7 +158,7 @@ Apify.main(async () => {
 
                 // If it's aprropriate, enqueue all pagination pages
                 const filtered = await isFiltered(page);
-                if((!input.useFilters && !input.maxPages) || filtered){
+                if((!input.useFilters && input.propertyType == 'none' && !input.maxPages) || filtered){
                     const baseUrl = await page.url();
                     if(baseUrl.indexOf('offset') < 0){
                         console.log('enqueuing pagination pages...');
@@ -173,6 +173,24 @@ Apify.main(async () => {
                                     userData: {label: 'page'}
                                 }));
                             }
+                        }
+                    }
+                }
+                
+                // If property type is enabled, enqueue necessary page.
+                if(input.propertyType != 'none'){
+                    console.log('enqueuing property type page...');
+                    const filters = await page.$$('.filterelement');
+                    const urlMod = fixUrl('&');
+                    for(const filter of filters){
+                        const fText = await getAttribute(filter, 'textContent');
+                        if(fText == input.propertyType){
+                            await requestQueue.addRequest(new Apify.Request({
+                                userData: { label: 'page' },
+                                url: urlMod(href),
+                                uniqueKey: fText + '_' + 0,
+                            }));
+                            break;
                         }
                     }
                 }

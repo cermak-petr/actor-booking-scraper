@@ -171,6 +171,7 @@ module.exports.isMinMaxPriceSet = async (page, input) => {
                 
 module.exports.setMinMaxPrice = async (page, input, requestQueue) => {
     console.log('enqueuing min-max price page...');
+    const urlMod = fixUrl('&', input);
     const fPrices = await (await page.$$('.filteroptions'))[0].$$('.filterelement');
     const index = pLabels.indexOf(input.minMaxPrice);
     const fText = await getAttribute(fPrices[index], 'textContent');

@@ -158,7 +158,7 @@ module.exports.setPropertyType = async (page, input, requestQueue) => {
     }
 };
                 
-const pLabels = ['0 - € 50', '€ 50 - € 100', '€ 100 - € 150', '€ 150 - € 200', '€ 200 +'];
+const pLabels = ["0-50", "50-100", "100-150", "150-200", "200+"];
 module.exports.isMinMaxPriceSet = async (page, input) => {
     if(input.minMaxPrice != 'none'){
         const fPrices = await (await page.$$('.filteroptions'))[0].$$('.filterelement');

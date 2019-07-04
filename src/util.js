@@ -102,7 +102,7 @@ module.exports.getWorkingBrowser = async (startUrl, input) => {
  * Creates a function to make sure the URL contains all necessary attributes from INPUT.
  * @param {string} s - The URL attribute separator (& or ;).
  */
-module.exports.fixUrl = (s, input) => (href) => {
+const fixUrl = (s, input) => (href) => {
     href = href.replace(/#([a-zA-Z_]+)/g, '');
     if (input.language && href.indexOf('lang') < 0) {
         const lng = input.language.replace('_', '-');
@@ -115,9 +115,70 @@ module.exports.fixUrl = (s, input) => (href) => {
     }
     return href.replace(/&{n,}/g, '&').replace('?&', '?');
 };
+module.exports.fixUrl = fixUrl;
 
 /**
  * Checks if page has some criteria filtering enabled.
  * @param {Page} page - The page to be checked.
  */
 module.exports.isFiltered = (page) => page.$('.filterelement.active');
+
+module.exports.isPropertyTypeSet = async (page, input) => {
+    if(input.propertyType != 'none'){
+        const filters = await page.$$('.filterelement');
+        for(const filter of filters){
+            const label = await filter.$('.filter_label');
+            const fText = await getAttribute(label, 'textContent');
+            if(fText == input.propertyType){
+                const cls = await getAttribute(filter, 'className');
+                if(!cls.includes('active')){return false;}
+            }
+        }
+    }
+    return true;
+}
+                
+module.exports.setPropertyType = async (page, input, requestQueue) => {
+    console.log('enqueuing property type page...');
+    const filters = await page.$$('.filterelement');
+    const urlMod = fixUrl('&', input);
+    for(const filter of filters){
+        const label = await filter.$('.filter_label');
+        const fText = await getAttribute(label, 'textContent');
+        if(fText == input.propertyType){
+            console.log('Using filter: ' + fText);
+            const href = await getAttribute(filter, 'href');
+            await requestQueue.addRequest(new Apify.Request({
+                userData: { label: 'page' },
+                url: urlMod(href),
+                uniqueKey: fText + '_' + 0,
+            }));
+            break;
+        }
+    }
+};
+                
+const pLabels = ['0 - € 50', '€ 50 - € 100', '€ 100 - € 150', '€ 150 - € 200', '€ 200 +'];
+module.exports.isMinMaxPriceSet = async (page, input) => {
+    if(input.minMaxPrice != 'none'){
+        const fPrices = await (await page.$$('.filteroptions'))[0].$$('.filterelement');
+        const index = pLabels.indexOf(input.minMaxPrice);
+        const cls = await getAttribute(fPrices[index], 'className');
+        if(!cls.includes('active')){return false;}
+    }
+    return true;
+};
+                
+module.exports.setMinMaxPrice = async (page, input, requestQueue) => {
+    console.log('enqueuing min-max price page...');
+    const fPrices = await (await page.$$('.filteroptions'))[0].$$('.filterelement');
+    const index = pLabels.indexOf(input.minMaxPrice);
+    const fText = await getAttribute(fPrices[index], 'textContent');
+    console.log('Using filter: ' + fText);
+    const href = await getAttribute(fPrices[index], 'href');
+    await requestQueue.addRequest(new Apify.Request({
+        userData: { label: 'page' },
+        url: urlMod(href),
+        uniqueKey: fText + '_' + 0,
+    }));
+};

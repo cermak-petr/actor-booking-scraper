@@ -193,10 +193,14 @@ Apify.main(async () => {
                 }
                 
                 // If property type is enabled, enqueue necessary page.
-                if(settingPropertyType){await setPropertyType(page, input, requestQueue);}
+                if(settingPropertyType && !settingMinMaxPrice){
+                    await setPropertyType(page, input, requestQueue);
+                }
                 
                 // If min-max price is enabled, enqueue necessary page.
-                if(settingMinMaxPrice){await setMinMaxPrice(page, input, requestQueue);}
+                if(settingMinMaxPrice && !settingPropertyType){
+                    await setMinMaxPrice(page, input, requestQueue);
+                }
                 
                 // If filtering is enabled, enqueue necessary pages.
                 if(input.useFilters && !filtered){

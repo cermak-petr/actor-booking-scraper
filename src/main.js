@@ -158,8 +158,8 @@ Apify.main(async () => {
                 
                 const filtered = await isFiltered(page);
                 const settingFilters = input.useFilters && !filtered;
-                const settingMinMaxPrice = input.minMaxPrice != 'none' && !await isMinMaxPriceSet();
-                const settingPropertyType = input.propertyType != 'none' && !await isPropertyTypeSet();
+                const settingMinMaxPrice = input.minMaxPrice != 'none' && !await isMinMaxPriceSet(page, input);
+                const settingPropertyType = input.propertyType != 'none' && !await isPropertyTypeSet(page, input);
                 const enqueuingReady = !(settingFilters || settingMinMaxPrice || settingPropertyType);
                 
                 // Check if the page was open through working proxy.
@@ -193,10 +193,10 @@ Apify.main(async () => {
                 }
                 
                 // If property type is enabled, enqueue necessary page.
-                if(settingPropertyType){await setPropertyType();}
+                if(settingPropertyType){await setPropertyType(page, input, requestQueue);}
                 
                 // If min-max price is enabled, enqueue necessary page.
-                if(settingMinMaxPrice){await setMinMaxPrice();}
+                if(settingMinMaxPrice){await setMinMaxPrice(page, input, requestQueue);}
                 
                 // If filtering is enabled, enqueue necessary pages.
                 if(input.useFilters && !filtered){

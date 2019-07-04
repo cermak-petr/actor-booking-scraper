@@ -120,7 +120,7 @@
         },
         "minMaxPrice": {
             "title": "Price range",
-            "type": "integer",
+            "type": "string",
             "description": "Minimum-maximum price range",
             "default": "none",
             "enum": ["0 - € 50", "€ 50 - € 100", "€ 100 - € 150", "€ 150 - € 200", "€ 200 +"] 

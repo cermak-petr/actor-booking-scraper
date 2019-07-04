@@ -170,7 +170,7 @@ Apify.main(async () => {
                 }
 
                 // If it's aprropriate, enqueue all pagination pages
-                if(enqueuingReady && !input.maxPages){
+                if(enqueuingReady && (!input.maxPages || input.minMaxPrice || input.propertyType)){
                     const baseUrl = await page.url();
                     if(baseUrl.indexOf('offset') < 0){
                         console.log('enqueuing pagination pages...');

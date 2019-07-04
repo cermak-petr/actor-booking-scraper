@@ -229,9 +229,9 @@ Apify.main(async () => {
                     }
                 } else if (enqueuingReady) { // If not, enqueue the detail pages to be extracted.
                     console.log('enqueuing detail pages...');
-                    /*await enqueueLinks(page, requestQueue, '.hotel_name_link', null, 'detail',
-                        fixUrl('&', input), (link) => getAttribute(link, 'textContent'));*/
-                    const items = await page.$$('.sr_item.sr_property_block');
+                    await enqueueLinks(page, requestQueue, '.hotel_name_link', null, 'detail',
+                        fixUrl('&', input), (link) => getAttribute(link, 'textContent'));
+                    /*const items = await page.$$('.sr_item.sr_property_block');
                     const urlMod = fixUrl('&', input);
                     const waitForPrice = async (item) => {
                         await page.evaluate(item => item.scrollIntoView(), item);
@@ -258,7 +258,7 @@ Apify.main(async () => {
                                 }));
                             }
                         }
-                    }
+                    }*/
                 }
             }
         },

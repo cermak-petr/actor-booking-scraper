@@ -36,6 +36,8 @@ Input is a JSON object with the following properties:
     "currency": PREFERRED_CURRENCY,
     "language": PREFERRED_LANGUAGE,
     "sortBy": BOOKING_SORT_TYPE,
+    "propertyType": PROPERTY_TYPE,
+    "minMaxPrice": MIN_MAX_PRICE_RANGE,
     "proxyConfig": APIFY_PROXY_CONFIG
 }
 ```
@@ -52,7 +54,39 @@ Input is a JSON object with the following properties:
 * `adults` number of adults to be set for the search.  
 * `children` number of children to be set for the search.  
 * `currency` preferred currency code to be set on the site.  
-* `language` preferred language code to be set on the site.  
+* `language` preferred language code to be set on the site. 
+* `propertyType` type of property to search, it will use filters, so cannot be combined with `useFilters`.  
+Must be one of the following:
+```javascript
+[
+    "none", 
+    "Hotels", 
+    "Apartments", 
+    "Hostels", 
+    "Guest houses", 
+    "Homestays", 
+    "Bed and breakfasts", 
+    "Holiday homes", 
+    "Boats", 
+    "Villas", 
+    "Motels", 
+    "Holiday parks", 
+    "Campsites", 
+    "Luxury tents"
+]
+```
+* `minMaxPrice` min-max price range, it will use filters, so cannot be combined with `useFilters`.  
+Must be one of the following:
+```javascript
+[
+    "none",
+    "0-50",
+    "50-100", 
+    "100-150", 
+    "150-200", 
+    "200+"
+]
+```
 * `proxyConfig` defines Apify proxy configuration, it should respect this format:  
 ```javascript
 "proxyConfig": {

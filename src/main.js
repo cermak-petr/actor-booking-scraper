@@ -1,6 +1,9 @@
 const Apify = require('apify');
 const { extractDetail, listPageFunction } = require('./extraction.js');
-const { getAttribute, enqueueLinks, addUrlParameters, getWorkingBrowser, fixUrl, isFiltered } = require('./util.js');
+const { 
+    getAttribute, enqueueLinks, addUrlParameters, getWorkingBrowser, fixUrl, 
+    isFiltered, isMinMaxPriceSet, setMinMaxPrice, isPropertyTypeSet, setPropertyType 
+} = require('./util.js');
 
 /** Main function */
 Apify.main(async () => {
@@ -65,7 +68,7 @@ Apify.main(async () => {
         startUrl += '&rows=20';
         console.log(`startUrl: ${startUrl}`);
         await requestQueue.addRequest(new Apify.Request({url: startUrl, userData: {label: 'start'}}));
-        if(!input.useFilters && input.propertyType == 'none' && input.maxPages){
+        if(!input.useFilters && input.propertyType == 'none' && input.minMaxPrice == 'none' && input.maxPages){
             for(let i = 1; i <= input.maxPages; i++){
                 await requestQueue.addRequest(new Apify.Request({
                     url: startUrl + '&offset=' + 20*i, 
@@ -152,6 +155,13 @@ Apify.main(async () => {
                 console.log('detail extracted');
                 await Apify.pushData(detail);
             } else { // Handle hotel list page.
+                
+                const filtered = await isFiltered(page);
+                const settingFilters = input.useFilters && !filtered;
+                const settingMinMaxPrice = input.minMaxPrice != 'none' && !await isMinMaxPriceSet();
+                const settingPropertyType = input.propertyType != 'none' && !await isPropertyTypeSet();
+                const enqueuingReady = !(settingFilters || settingMinMaxPrice || settingPropertyType);
+                
                 // Check if the page was open through working proxy.
                 const pageUrl = await page.url();
                 if (!input.startUrls && pageUrl.indexOf(sortBy) < 0) {
@@ -160,8 +170,7 @@ Apify.main(async () => {
                 }
 
                 // If it's aprropriate, enqueue all pagination pages
-                const filtered = await isFiltered(page);
-                if((!input.useFilters && input.propertyType == 'none' && !input.maxPages) || filtered){
+                if(enqueuingReady && !input.maxPages){
                     const baseUrl = await page.url();
                     if(baseUrl.indexOf('offset') < 0){
                         console.log('enqueuing pagination pages...');
@@ -184,25 +193,10 @@ Apify.main(async () => {
                 }
                 
                 // If property type is enabled, enqueue necessary page.
-                if(input.propertyType != 'none' && !filtered){
-                    console.log('enqueuing property type page...');
-                    const filters = await page.$$('.filterelement');
-                    const urlMod = fixUrl('&', input);
-                    for(const filter of filters){
-                        const label = await filter.$('.filter_label');
-                        const fText = await getAttribute(label, 'textContent');
-                        if(fText == input.propertyType){
-                            console.log('Using filter: ' + fText);
-                            const href = await getAttribute(filter, 'href');
-                            await requestQueue.addRequest(new Apify.Request({
-                                userData: { label: 'page' },
-                                url: urlMod(href),
-                                uniqueKey: fText + '_' + 0,
-                            }));
-                            break;
-                        }
-                    }
-                }
+                if(settingPropertyType){await setPropertyType();}
+                
+                // If min-max price is enabled, enqueue necessary page.
+                if(settingMinMaxPrice){await setMinMaxPrice();}
                 
                 // If filtering is enabled, enqueue necessary pages.
                 if(input.useFilters && !filtered){
@@ -229,7 +223,7 @@ Apify.main(async () => {
                         if (migrating) { await Apify.setValue('STATE', state); }
                         if (toBeAdded.length > 0) { await Apify.pushData(toBeAdded); }
                     }
-                } else if ((!input.useFilters && input.propertyType == 'none') || await isFiltered(page)) { // If not, enqueue the detail pages to be extracted.
+                } else if (enqueuingReady) { // If not, enqueue the detail pages to be extracted.
                     console.log('enqueuing detail pages...');
                     /*await enqueueLinks(page, requestQueue, '.hotel_name_link', null, 'detail',
                         fixUrl('&', input), (link) => getAttribute(link, 'textContent'));*/

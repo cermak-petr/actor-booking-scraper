@@ -174,7 +174,7 @@ module.exports.setMinMaxPrice = async (page, input, requestQueue) => {
     const urlMod = fixUrl('&', input);
     const fPrices = await (await page.$$('.filteroptions'))[0].$$('.filterelement');
     const index = pLabels.indexOf(input.minMaxPrice);
-    const label = await fPrices[index].$('.filter_label');
+    const label = await (fPrices[index]).$('.filter_label');
     const fText = await getAttribute(label, 'textContent');
     console.log('Using filter: ' + fText);
     const href = await getAttribute(fPrices[index], 'href');

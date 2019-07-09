@@ -174,7 +174,7 @@ Apify.main(async () => {
                     const baseUrl = await page.url();
                     if(baseUrl.indexOf('offset') < 0){
                         console.log('enqueuing pagination pages...');
-                        const pageSelector = '.bui-pagination__list a:not(aria-current)';
+                        const pageSelector = '.bui-pagination__list a:not([aria-current])';
                         const countSelector = '.sorth1, .sr_header h1, .sr_header h2';
                         try{
                             await page.waitForSelector(pageSelector, {timeout: 60000});

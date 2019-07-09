@@ -155,12 +155,12 @@ Apify.main(async () => {
                 console.log('detail extracted');
                 await Apify.pushData(detail);
             } else { // Handle hotel list page.
-                console.log('1');
-                const filtered = await isFiltered(page);console.log('2');
-                const settingFilters = input.useFilters && !filtered;console.log('3');
-                const settingMinMaxPrice = input.minMaxPrice != 'none' && !await isMinMaxPriceSet(page, input);console.log('4');
-                const settingPropertyType = input.propertyType != 'none' && !await isPropertyTypeSet(page, input);console.log('5');
-                const enqueuingReady = !(settingFilters || settingMinMaxPrice || settingPropertyType);console.log('6');
+                
+                const filtered = await isFiltered(page);
+                const settingFilters = input.useFilters && !filtered;
+                const settingMinMaxPrice = input.minMaxPrice != 'none' && !await isMinMaxPriceSet(page, input);
+                const settingPropertyType = input.propertyType != 'none' && !await isPropertyTypeSet(page, input);
+                const enqueuingReady = !(settingFilters || settingMinMaxPrice || settingPropertyType);
                 
                 // Check if the page was open through working proxy.
                 const pageUrl = await page.url();

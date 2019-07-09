@@ -125,7 +125,8 @@ module.exports.isFiltered = (page) => page.$('.filterelement.active');
 
 module.exports.isPropertyTypeSet = async (page, input) => {
     if(input.propertyType != 'none'){
-        const filters = await page.$$('.filterelement');
+        //const filters = await page.$$('.filterelement');
+        await (await page.$$('.filteroptions'))[14].$$('.filterelement');
         for(const filter of filters){
             const label = await filter.$('.filter_label');
             const fText = await getAttribute(label, 'textContent');
@@ -140,7 +141,7 @@ module.exports.isPropertyTypeSet = async (page, input) => {
                 
 module.exports.setPropertyType = async (page, input, requestQueue) => {
     console.log('enqueuing property type page...');
-    const filters = await (await page.$$('.filteroptions'))[1].$$('.filterelement');
+    const filters = await (await page.$$('.filteroptions'))[14].$$('.filterelement');
     const urlMod = fixUrl('&', input);
     for(const filter of filters){
         const label = await filter.$('.filter_label');

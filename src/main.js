@@ -177,7 +177,7 @@ Apify.main(async () => {
                         const countSelector = '.sorth1, .sr_header h1, .sr_header h2';
                         try{
                             await page.waitForSelector('.bui-pagination__list a', {timeout: 60000});
-                            const pagElem = await page.$('.bui-pagination__list a');
+                            const pageElem = await page.$('.bui-pagination__list a');
                             const pageUrl = await getAttribute(pageElem, 'href');
                             await page.waitForSelector(countSelector);
                             const countElem = await page.$(countSelector);

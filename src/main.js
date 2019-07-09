@@ -171,7 +171,7 @@ Apify.main(async () => {
 
                 // If it's aprropriate, enqueue all pagination pages
                 if(enqueuingReady && (!input.maxPages || input.minMaxPrice || input.propertyType)){
-                    //const baseUrl = await page.url();
+                    const baseUrl = await page.url();
                     if(baseUrl.indexOf('offset') < 0){
                         console.log('enqueuing pagination pages...');
                         const countSelector = '.sorth1, .sr_header h1, .sr_header h2';

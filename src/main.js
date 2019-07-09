@@ -154,6 +154,7 @@ Apify.main(async () => {
                 const detail = await extractDetail(page, ld, input);
                 console.log('detail extracted');
                 await Apify.pushData(detail);
+                return;
             } else { // Handle hotel list page.
                 
                 const filtered = await isFiltered(page);

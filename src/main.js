@@ -189,7 +189,10 @@ Apify.main(async () => {
                                 }
                             }
                         }
-                        catch(e){console.log(e);}
+                        catch(e){
+                            console.log(e); 
+                            await Apify.setValue('count_error.html', await page.content(), {contentType: 'text/html'});
+                        }
                     }
                 }
                 

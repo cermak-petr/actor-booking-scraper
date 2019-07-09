@@ -171,11 +171,14 @@ Apify.main(async () => {
 
                 // If it's aprropriate, enqueue all pagination pages
                 if(enqueuingReady && (!input.maxPages || input.minMaxPrice || input.propertyType)){
-                    const baseUrl = await page.url();
+                    //const baseUrl = await page.url();
                     if(baseUrl.indexOf('offset') < 0){
                         console.log('enqueuing pagination pages...');
                         const countSelector = '.sorth1, .sr_header h1, .sr_header h2';
                         try{
+                            await page.waitForSelector('.bui-pagination__list a');
+                            const pagElem = await page.$('.bui-pagination__list a');
+                            const pageUrl = await getAttribute(pageElem, 'href');
                             await page.waitForSelector(countSelector);
                             const countElem = await page.$(countSelector);
                             const countData = (await getAttribute(countElem, 'textContent')).replace(/\.|,|\s/g, '').match(/\d+/);
@@ -184,7 +187,8 @@ Apify.main(async () => {
                                 console.log('pagination pages: ' + count);
                                 for(let i = 0; i <= count; i++){
                                     await requestQueue.addRequest(new Apify.Request({
-                                        url: baseUrl + '&rows=20&offset=' + 20*i, 
+                                        url: pageUrl.replace(/rows=(\d+)/, 'rows=20').replace(/offset=(\d+)/, 'offset=' + 20*i),
+                                        //url: baseUrl + '&rows=20&offset=' + 20*i, 
                                         userData: {label: 'page'}
                                     }));
                                 }

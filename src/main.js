@@ -174,9 +174,10 @@ Apify.main(async () => {
                     const baseUrl = await page.url();
                     if(baseUrl.indexOf('offset') < 0){
                         console.log('enqueuing pagination pages...');
+                        const countSelector = '.sorth1, .sr_header h1, .sr_header h2';
                         try{
-                            await page.waitForSelector('.sorth1, .sr_header h1');
-                            const countElem = await page.$('.sorth1, .sr_header h1');
+                            await page.waitForSelector(countSelector);
+                            const countElem = await page.$(countSelector);
                             const countData = (await getAttribute(countElem, 'textContent')).replace(/\.|,|\s/g, '').match(/\d+/);
                             if(countData){
                                 const count = Math.ceil(parseInt(countData[0])/20);

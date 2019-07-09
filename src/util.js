@@ -125,8 +125,22 @@ module.exports.isFiltered = (page) => page.$('.filterelement.active');
 
 module.exports.isPropertyTypeSet = async (page, input) => {
     if(input.propertyType != 'none'){
+        const set = await page.evaluate((propertyType) => {
+            const filters = Array.from(document.querySelector('.filterelement'));
+            for(const filter of filters){
+                const label = filter.querySelector('.filter_label');
+                const fText = label.textContent.trim();
+                if(fText == propertyType){
+                    const cls = filter.className;
+                    if(!cls.includes('active')){return false;}
+                    else{return true;}
+                }
+            }
+            return true;
+        }, input.propertyType);
+        return set;
         //const filters = await page.$$('.filterelement');
-        const filters = await (await page.$$('.filteroptions'))[14].$$('.filterelement');
+        /*const filters = await (await page.$$('.filteroptions'))[14].$$('.filterelement');
         for(const filter of filters){
             const label = await filter.$('.filter_label');
             const fText = await getAttribute(label, 'textContent');
@@ -134,7 +148,7 @@ module.exports.isPropertyTypeSet = async (page, input) => {
                 const cls = await getAttribute(filter, 'className');
                 if(!cls.includes('active')){return false;}
             }
-        }
+        }*/
     }
     return true;
 }

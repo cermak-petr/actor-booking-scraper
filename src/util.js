@@ -140,7 +140,7 @@ module.exports.isPropertyTypeSet = async (page, input) => {
                 
 module.exports.setPropertyType = async (page, input, requestQueue) => {
     console.log('enqueuing property type page...');
-    const filters = await page.$$('.filterelement');
+    const filters = await (await page.$$('.filteroptions'))[1].$$('.filterelement');
     const urlMod = fixUrl('&', input);
     for(const filter of filters){
         const label = await filter.$('.filter_label');

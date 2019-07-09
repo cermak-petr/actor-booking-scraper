@@ -126,7 +126,7 @@ module.exports.isFiltered = (page) => page.$('.filterelement.active');
 module.exports.isPropertyTypeSet = async (page, input) => {
     if(input.propertyType != 'none'){
         //const filters = await page.$$('.filterelement');
-        await (await page.$$('.filteroptions'))[14].$$('.filterelement');
+        const filters = await (await page.$$('.filteroptions'))[14].$$('.filterelement');
         for(const filter of filters){
             const label = await filter.$('.filter_label');
             const fText = await getAttribute(label, 'textContent');

@@ -155,20 +155,20 @@ Apify.main(async () => {
                 console.log('detail extracted');
                 await Apify.pushData(detail);
             } else { // Handle hotel list page.
-                
+                console.log('1');
                 const filtered = await isFiltered(page);
                 const settingFilters = input.useFilters && !filtered;
                 const settingMinMaxPrice = input.minMaxPrice != 'none' && !await isMinMaxPriceSet(page, input);
                 const settingPropertyType = input.propertyType != 'none' && !await isPropertyTypeSet(page, input);
                 const enqueuingReady = !(settingFilters || settingMinMaxPrice || settingPropertyType);
-                
+                console.log('2');
                 // Check if the page was open through working proxy.
                 const pageUrl = await page.url();
                 if (!input.startUrls && pageUrl.indexOf(sortBy) < 0) {
                     await retireBrowser();
                     return;
                 }
-
+                console.log('3');
                 // If it's aprropriate, enqueue all pagination pages
                 if(enqueuingReady && (!input.maxPages || input.minMaxPrice || input.propertyType)){
                     const baseUrl = await page.url();
@@ -201,17 +201,17 @@ Apify.main(async () => {
                         }
                     }
                 }
-                
+                console.log('4');
                 // If property type is enabled, enqueue necessary page.
                 if(settingPropertyType){
                     await setPropertyType(page, input, requestQueue);
                 }
-                
+                console.log('5');
                 // If min-max price is enabled, enqueue necessary page.
                 if(settingMinMaxPrice && !settingPropertyType){
                     await setMinMaxPrice(page, input, requestQueue);
                 }
-                
+                console.log('6');
                 // If filtering is enabled, enqueue necessary pages.
                 if(input.useFilters && !filtered){
                     console.log('enqueuing filtered pages...');

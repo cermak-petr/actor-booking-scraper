@@ -79,7 +79,7 @@ module.exports.getWorkingBrowser = async (startUrl, input) => {
         const browser = await Apify.launchPuppeteer(input.proxyConfig || {});
         const page = await browser.newPage();
         try{
-            //await Apify.utils.puppeteer.hideWebDriver(page);
+            await Apify.utils.puppeteer.hideWebDriver(page);
             await page.goto(startUrl, { timeout: 100000 });
             await page.waitForNavigation({ timeout: 100000 });
         } catch(e) {

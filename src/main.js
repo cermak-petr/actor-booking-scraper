@@ -101,7 +101,7 @@ Apify.main(async () => {
             if (!input.testProxy) {
                 return Apify.launchPuppeteer(input.proxyConfig || {});
             }
-            return getWorkingBrowser(startUrl, input.proxyConfig);
+            return getWorkingBrowser(startUrl, input);
         },
 
         // Main page handling function.

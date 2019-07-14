@@ -76,12 +76,12 @@ module.exports.getWorkingBrowser = async (startUrl, input) => {
     const sortBy = input.sortBy || 'bayesian_review_score';
     for (let i = 0; i < 1000; i++) {
         console.log('testing proxy...');
-        const browser = await Apify.launchPuppeteer(input.proxyConfig || {});console.log('a');
-        const page = await browser.newPage();console.log('b');
+        const browser = await Apify.launchPuppeteer(input.proxyConfig || {});
+        const page = await browser.newPage();
         try{
             //await Apify.utils.puppeteer.hideWebDriver(page);
-            await page.goto(startUrl, { timeout: 200000 });console.log('c');
-            await page.waitForNavigation({ timeout: 200000 });console.log('d');
+            await page.goto(startUrl, { timeout: 100000 });
+            await page.waitForNavigation({ timeout: 100000 });
         } catch(e) {
             console.log('invalid proxy, retrying...');
             console.log(e);

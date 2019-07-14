@@ -151,6 +151,12 @@
             "type": "boolean",
             "description": "The crawler will enqueue all the different criteria filtered pages, this will overcome the 1000 results limit, but the scrape will take significantly longer.",
             "default": false
+        },
+        "testProxy": {
+            "title": "Test proxies (useful for proxy groups with many blocked IPs, experimental)",
+            "type": "boolean",
+            "description": "Before starting crawling, the crawler will try to find a proxy that's not blocked by Booking.",
+            "default": false
         }
     },
     "required": []

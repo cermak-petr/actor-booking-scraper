@@ -284,7 +284,7 @@ module.exports.listPageFunction = (input) => new Promise((resolve, reject) => {
             const stars = starAttr ? starAttr.match(/\d/) : null;
             const buiLink1 = jThis.find('.bui-link--primary');
             const buiLink2 = jThis.find('a.district_link');
-            const address = (buiLink2.length > 0 ? buiLink2 : buiLink1.contents().eq(0)).text().split('\n')[0].trim();
+            const address = (buiLink2.length > 0 ? buiLink2 : buiLink1.contents().eq(0)).text().trim().split('\n')[0].trim();
             const loc = (buiLink1.length > 0 ? buiLink1 : buiLink2).attr('data-coords');
             const latlng = loc ? loc.split(',') : null;
             const image = jThis.find('.sr_item_photo_link.sr_hotel_preview_track').attr('style');

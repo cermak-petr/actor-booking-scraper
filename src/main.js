@@ -226,6 +226,7 @@ Apify.main(async () => {
                     console.log('extracting data...');
                     await Apify.utils.puppeteer.injectJQuery(page);
                     const result = await page.evaluate(listPageFunction, input);
+                    console.log('Found ' + result.length + ' results');
                     if (result.length > 0) {
                         const toBeAdded = [];
                         for (const item of result) {

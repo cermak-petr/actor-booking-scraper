@@ -263,7 +263,7 @@ module.exports.listPageFunction = (input) => new Promise((resolve, reject) => {
         ++started;
         sr.scrollIntoView();
         const getPrice = function () {
-            return $(sr).find(':not(strong).site_price, .totalPrice, strong.price');
+            return $(sr).find('.bui-price-display__value, :not(strong).site_price, .totalPrice, strong.price');
         };
 
         // When the price is ready, extract data.
@@ -271,8 +271,8 @@ module.exports.listPageFunction = (input) => new Promise((resolve, reject) => {
             /* eslint-disable */
             const origin = window.location.origin;
             /* eslint-enable */
-            const occ = jThis.find('.sr_max_occupancy i').length;
-            const rl = jThis.find('.room_link span').contents();
+            const occ = jThis.find('.sr_max_occupancy i, .c-occupancy-icons__adults i').length;
+            const rl = jThis.find('.room_link span, .room_link').eq(0).contents();
             const prtxt = getPrice().eq(0).text().trim()
                 .replace(/,|\s/g, '');
             const pr = prtxt.match(/\d+/);
@@ -281,7 +281,7 @@ module.exports.listPageFunction = (input) => new Promise((resolve, reject) => {
             const found = num ? parseInt(num, 10) : null;
             const starAttr = jThis.find('i.star_track svg').attr('class');
             const stars = starAttr ? starAttr.match(/\d/) : null;
-            const buiLink = jThis.find('.bui-link--primary');
+            const buiLink = jThis.find('.bui-link--primary, a.district_link');
             const address = buiLink.contents().eq(0).text().trim();
             const loc = buiLink.attr('data-coords');
             const latlng = loc ? loc.split(',') : null;

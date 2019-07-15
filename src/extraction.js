@@ -283,7 +283,7 @@ module.exports.listPageFunction = (input) => new Promise((resolve, reject) => {
             const starAttr = jThis.find('i.star_track svg').attr('class');
             const stars = starAttr ? starAttr.match(/\d/) : null;
             const buiLink1 = jThis.find('.bui-link--primary');
-            const buiLink2 = jThis.find('a.district_link');
+            const buiLink2 = jThis.find('a.district_link, .bui-link').eq(0);
             const address = (buiLink2.length > 0 ? buiLink2 : buiLink1.contents().eq(0)).text().trim().split('\n')[0].trim();
             const loc = (buiLink1.length > 0 ? buiLink1 : buiLink2).attr('data-coords');
             const latlng = loc ? loc.split(',') : null;

@@ -298,7 +298,7 @@ module.exports.listPageFunction = (input) => new Promise((resolve, reject) => {
                 stars: stars ? parseInt(stars[0], 10) : null,
                 price: pr ? parseFloat(pr[0]) : null,
                 currency: pc ? pc[0].trim() : null,
-                roomType: rl1.length > 0 ? rl1[0].textContent.trim() : rl2[0].textContent.trim(),
+                roomType: rl1.length > 0 ? rl1.eq(0).text().trim() : rl2.text().trim(),
                 persons: occ || null,
                 address: address,
                 location: latlng ? { lat: latlng[0], lng: latlng[1] } : null,

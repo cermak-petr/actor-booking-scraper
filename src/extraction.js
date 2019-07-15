@@ -272,7 +272,8 @@ module.exports.listPageFunction = (input) => new Promise((resolve, reject) => {
             const origin = window.location.origin;
             /* eslint-enable */
             const occ = jThis.find('.sr_max_occupancy i, .c-occupancy-icons__adults i').length;
-            const rl = jThis.find('.room_link span, .room_link').eq(0).contents();
+            const rl1 = jThis.find('.room_link span').eq(0).contents();
+            const rl2 = jThis.find('.room_link strong');
             const prtxt = getPrice().eq(0).text().trim()
                 .replace(/,|\s/g, '');
             const pr = prtxt.match(/\d+/);
@@ -282,7 +283,7 @@ module.exports.listPageFunction = (input) => new Promise((resolve, reject) => {
             const starAttr = jThis.find('i.star_track svg').attr('class');
             const stars = starAttr ? starAttr.match(/\d/) : null;
             const buiLink = jThis.find('.bui-link--primary, a.district_link');
-            const address = buiLink.contents().eq(0).text().trim();
+            const address = buiLink.contents().eq(0).text().split('\n')[0].trim();
             const loc = buiLink.attr('data-coords');
             const latlng = loc ? loc.split(',') : null;
             const image = jThis.find('.sr_item_photo_link.sr_hotel_preview_track').attr('style');
@@ -297,7 +298,7 @@ module.exports.listPageFunction = (input) => new Promise((resolve, reject) => {
                 stars: stars ? parseInt(stars[0], 10) : null,
                 price: pr ? parseFloat(pr[0]) : null,
                 currency: pc ? pc[0].trim() : null,
-                roomType: rl.length > 0 ? rl[0].textContent.trim() : null,
+                roomType: rl1.length > 0 ? rl1[0].textContent.trim() : rl2[0].textContent.trim(),
                 persons: occ || null,
                 address: address,
                 location: latlng ? { lat: latlng[0], lng: latlng[1] } : null,

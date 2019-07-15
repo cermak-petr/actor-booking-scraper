@@ -222,8 +222,9 @@ Apify.main(async () => {
                     });
                 }
 
-                if (input.simple) { // If simple output is enough, extract the data.
+                if (enqueuingReady && input.simple) { // If simple output is enough, extract the data.
                     console.log('extracting data...');
+                    await Apify.setValue('page.html', await page.content(), {contentType: 'text/html'});
                     await Apify.utils.puppeteer.injectJQuery(page);
                     const result = await page.evaluate(listPageFunction, input);
                     console.log('Found ' + result.length + ' results');

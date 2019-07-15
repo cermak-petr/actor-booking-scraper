@@ -187,7 +187,7 @@ Apify.main(async () => {
                             if(countData){
                                 const count = Math.ceil(parseInt(countData[0])/20);
                                 console.log('pagination pages: ' + count);
-                                for(let i = 0; i <= count; i++){
+                                for(let i = 0; i < count; i++){
                                     await requestQueue.addRequest(new Apify.Request({
                                         url: pageUrl.replace(/rows=(\d+)/, 'rows=20').replace(/offset=(\d+)/, 'offset=' + 20*i),
                                         //url: baseUrl + '&rows=20&offset=' + 20*i, 

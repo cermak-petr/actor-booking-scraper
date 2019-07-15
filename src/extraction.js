@@ -282,9 +282,10 @@ module.exports.listPageFunction = (input) => new Promise((resolve, reject) => {
             const found = num ? parseInt(num, 10) : null;
             const starAttr = jThis.find('i.star_track svg').attr('class');
             const stars = starAttr ? starAttr.match(/\d/) : null;
-            const buiLink = jThis.find('.bui-link--primary, a.district_link');
-            const address = buiLink.contents().eq(0).text().split('\n')[0].trim();
-            const loc = buiLink.attr('data-coords');
+            const buiLink1 = jThis.find('.bui-link--primary');
+            const buiLink2 = jThis.find('a.district_link');
+            const address = (buiLink1.length > 0 ? buiLink1.contents().eq(0) : buiLink2).text().split('\n')[0].trim();
+            const loc = (buiLink1.length > 0 ? buiLink1 : buiLink2).attr('data-coords');
             const latlng = loc ? loc.split(',') : null;
             const image = jThis.find('.sr_item_photo_link.sr_hotel_preview_track').attr('style');
             const imageRegexp = /url\((.*?)\)/gm;
@@ -298,7 +299,7 @@ module.exports.listPageFunction = (input) => new Promise((resolve, reject) => {
                 stars: stars ? parseInt(stars[0], 10) : null,
                 price: pr ? parseFloat(pr[0]) : null,
                 currency: pc ? pc[0].trim() : null,
-                roomType: rl1.length > 0 ? rl1.eq(0).text().trim() : rl2.text().trim(),
+                roomType: rl2.length > 0 ? rl2.text().trim() : rl1.eq(0).text().trim(),
                 persons: occ || null,
                 address: address,
                 location: latlng ? { lat: latlng[0], lng: latlng[1] } : null,

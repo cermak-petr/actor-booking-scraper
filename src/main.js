@@ -132,7 +132,7 @@ Apify.main(async () => {
             // Check if page was loaded with correct currency.
             const curInput = await page.$('input[name="selected_currency"]');
             const currency = await getAttribute(curInput, 'value');
-            if(!currency != input.currency){
+            if(!currency || currency != input.currency){
                 await retireBrowser();
                 throw new Error('Wrong currency: ' + currency + ', re-enqueuing...');
             }

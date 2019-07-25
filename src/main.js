@@ -148,7 +148,15 @@ Apify.main(async () => {
                 if (!ld || (ld.aggregateRating && ld.aggregateRating.ratingValue <= (input.minScore || 0))) {
                     return;
                 }
-
+                
+                // Check if page was loaded with correct currency.
+                const curInput = await page.$('input[name="selected_currency"]');
+                const currency = await getAttribute(curInput, 'value');
+                if(!currency != input.currency){
+                    await retireBrowser();
+                    throw new Error('Wrong currency: ' + currency + ', re-enqueuing...');
+                }
+                
                 // Extract the data.
                 console.log('extracting detail...');
                 const detail = await extractDetail(page, ld, input);

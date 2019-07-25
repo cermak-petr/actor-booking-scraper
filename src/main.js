@@ -129,6 +129,14 @@ Apify.main(async () => {
                 }
             }
 
+            // Check if page was loaded with correct currency.
+            const curInput = await page.$('input[name="selected_currency"]');
+            const currency = await getAttribute(curInput, 'value');
+            if(!currency != input.currency){
+                await retireBrowser();
+                throw new Error('Wrong currency: ' + currency + ', re-enqueuing...');
+            }
+            
             if (request.userData.label === 'detail') { // Extract data from the hotel detail page
                 // wait for necessary elements
                 try { await page.waitForSelector('.hprt-occupancy-occupancy-info'); } catch (e) { console.log('occupancy info not found'); }
@@ -147,14 +155,6 @@ Apify.main(async () => {
                 // Exit if core data is not present ot the rating is too low.
                 if (!ld || (ld.aggregateRating && ld.aggregateRating.ratingValue <= (input.minScore || 0))) {
                     return;
-                }
-                
-                // Check if page was loaded with correct currency.
-                const curInput = await page.$('input[name="selected_currency"]');
-                const currency = await getAttribute(curInput, 'value');
-                if(!currency != input.currency){
-                    await retireBrowser();
-                    throw new Error('Wrong currency: ' + currency + ', re-enqueuing...');
                 }
                 
                 // Extract the data.

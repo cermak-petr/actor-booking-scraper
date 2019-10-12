@@ -251,36 +251,28 @@ Apify.main(async () => {
                     }
                 } else if (enqueuingReady) { // If not, enqueue the detail pages to be extracted.
                     console.log('enqueuing detail pages...');
-                    await enqueueLinks(page, requestQueue, '.hotel_name_link', null, 'detail',
-                        fixUrl('&', input), (link) => getAttribute(link, 'textContent'));
-                    /*const items = await page.$$('.sr_item.sr_property_block');
+                    //await enqueueLinks(page, requestQueue, '.hotel_name_link', null, 'detail',
+                    //    fixUrl('&', input), (link) => getAttribute(link, 'textContent'));
                     const urlMod = fixUrl('&', input);
-                    const waitForPrice = async (item) => {
-                        await page.evaluate(item => item.scrollIntoView(), item);
-                        for(let i = 0; i < 100; i++){
-                            const price = await item.$(':not(strong).site_price, .totalPrice, strong.price, .bui-price-display__value');
-                            const tValue = await getAttribute(price, 'textContent');
-                            if(!tValue){await page.waitFor(100);}
-                            else{return tValue;}
-                        }
-                        return null;
-                    };
-                    for(const item of items){
-                        const link = await item.$('.hotel_name_link');
-                        const tValue = await await waitForPrice(item);
+                    const keyMod = (link) => getAttribute(link, 'textContent');
+                    const prItem = await page.$('.bui-pagination__info');
+                    const pageRange = (await getAttribute(prItem, 'textContent')).match(/\d+/g);
+                    const firstItem = parseInt(pageRange[0]);
+                    const links = await page.$$('.hotel_name_link');
+                    for (let iLink = 0; iLink < links.length; iLink++) {
+                        const link = links[iLink];
                         const href = await getAttribute(link, 'href');
-                        const text = await getAttribute(link, 'textContent');
-                        if (tValue) {
-                            const value = parseInt(tValue.replace(/\.|,|\s/g, '').match(/\d+/));
-                            if (href && value > input.minPrice && value < input.maxPrice) {
-                                await requestQueue.addRequest(new Apify.Request({
-                                    userData: { label: 'detail' },
-                                    url: urlMod ? urlMod(href) : href,
-                                    uniqueKey: text,
-                                }));
-                            }
+                        if (href) {
+                            await requestQueue.addRequest(new Apify.Request({
+                                userData: { 
+                                    label: 'detail',
+                                    order: iLink + firstItem
+                                },
+                                url: urlMod ? urlMod(href) : href,
+                                uniqueKey: keyMod ? (await keyMod(link)) : href,
+                            }));
                         }
-                    }*/
+                    }
                 }
             }
         },

@@ -270,7 +270,7 @@ Apify.main(async () => {
                                 },
                                 url: urlMod ? urlMod(href) : href,
                                 uniqueKey: keyMod ? (await keyMod(link)) : href,
-                            }));
+                            }), { forefront: true });
                         }
                     }
                 }

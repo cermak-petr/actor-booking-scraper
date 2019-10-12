@@ -162,7 +162,7 @@ const extractRoomsJQuery = () => {
  * @param {Object} ld - JSON-LD Object extracted from the page.
  * @param {Object} input - The Actor input data object.
  */
-module.exports.extractDetail = async (page, ld, input) => {
+module.exports.extractDetail = async (page, ld, input, userData) => {
     const addr = ld.address || null;
     const address = {
         full: addr.streetAddress,
@@ -188,6 +188,7 @@ module.exports.extractDetail = async (page, ld, input) => {
     //const rooms = await extractRooms(page);
     const rooms = await page.evaluate(extractRoomsJQuery);
     return {
+        order: userData.order,
         url: addUrlParameters((await page.url()).split('?')[0], input),
         name: nameText[nameText.length - 1].trim(),
         type: await getAttribute(hType, 'textContent'),

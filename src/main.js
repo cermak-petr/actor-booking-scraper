@@ -159,7 +159,7 @@ Apify.main(async () => {
                 
                 // Extract the data.
                 console.log('extracting detail...');
-                const detail = await extractDetail(page, ld, input);
+                const detail = await extractDetail(page, ld, input, request.userData);
                 console.log('detail extracted');
                 await Apify.pushData(detail);
                 return;

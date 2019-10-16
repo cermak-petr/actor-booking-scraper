@@ -143,7 +143,7 @@ module.exports.isPropertyTypeSet = async (page, input) => {
             for(const filter of filters){
                 const label = filter.querySelector('.filter_label');
                 const fText = label.textContent.trim();
-                if(fText == 'Hostels'){
+                if(fText == input.propertyType){
                     const cls = filter.className;
                     if(!cls.includes('active')){return false;}
                     else{return true;}

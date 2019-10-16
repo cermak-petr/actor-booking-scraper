@@ -89,7 +89,10 @@ module.exports.getWorkingBrowser = async (startUrl, input) => {
     const sortBy = input.sortBy || 'bayesian_review_score';
     for (let i = 0; i < 1000; i++) {
         console.log('testing proxy...');
-        const browser = await Apify.launchPuppeteer(input.proxyConfig || {});
+        const config = Object.assign({
+            apifyProxySession: 'BOOKING_' + Math.random()
+        }, input.proxyConfig || {});
+        const browser = await Apify.launchPuppeteer(config);
         const page = await browser.newPage();
         try{
             await Apify.utils.puppeteer.hideWebDriver(page);

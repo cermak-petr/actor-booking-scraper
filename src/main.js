@@ -95,6 +95,8 @@ Apify.main(async () => {
         requestList,
 
         requestQueue,
+        
+        handlePageTimeoutSecs: 120,
 
         // Browser instance creation.
         launchPuppeteerFunction: () => {

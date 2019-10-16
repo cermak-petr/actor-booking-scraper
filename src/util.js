@@ -96,8 +96,8 @@ module.exports.getWorkingBrowser = async (startUrl, input) => {
         const page = await browser.newPage();
         try{
             await Apify.utils.puppeteer.hideWebDriver(page);
-            await page.goto(startUrl, { timeout: 100000 });
-            await page.waitForNavigation({ timeout: 100000 });
+            await page.goto(startUrl, { timeout: 60000 });
+            //await page.waitForNavigation({ timeout: 60000 });
         } catch(e) {
             console.log('invalid proxy, retrying...');
             console.log(e);
